@@ -170,6 +170,7 @@
 
     function onKeyDown(event) {
         if(keyData[event.key]){
+          console.log(keyData[event.key]);
             var maxPoint = new Point(view.size.width, view.size.height);
             var randomPoint = Point.random();
             var point = maxPoint * randomPoint;
@@ -199,9 +200,33 @@
         }
       }
 
+    var loop = document.getElementById("loop");
+    var isLoopPlaying = false;
+    var intervalKick;
+    var intervalClap;
+    loop.addEventListener('click',function() {
+
+      if(isLoopPlaying) {
+        clearInterval(intervalKick);
+        clearInterval(intervalClap);
+      }
+      else {
+        intervalKick = setInterval(function(){
+          <!-- keyData['v'].sound.play(); -->
+          onKeyDown({key: "v"});
+        }, 1000)
+        intervalClap = setInterval(function(){
+          keyData['b'].sound.play();
+        }, 2000)
+      }
+
+      isLoopPlaying = !isLoopPlaying;
+    });
+
     </script>
 </head>
 <body>
+    <button id="loop">Loop</button>
     <canvas id="myCanvas" resize></canvas>  
 </body>
 </html>
